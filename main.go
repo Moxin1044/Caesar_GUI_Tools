@@ -63,21 +63,16 @@ func main() {
 	win.Resize(fyne.NewSize(800, 600))
 	win.SetFixedSize(true)
 
-	// 多行编辑框：输入、输出、日志
+	// 多行编辑框：输入、输出
 	inputEntry := widget.NewMultiLineEntry()
 	inputEntry.Wrapping = fyne.TextWrapOff
 	inputScroll := container.NewScroll(inputEntry)
-	inputScroll.SetMinSize(fyne.NewSize(0, 150))
+	inputScroll.SetMinSize(fyne.NewSize(0, 200))
 
 	outputEntry := widget.NewMultiLineEntry()
 	outputEntry.Wrapping = fyne.TextWrapOff
 	outputScroll := container.NewScroll(outputEntry)
-	outputScroll.SetMinSize(fyne.NewSize(0, 150))
-
-	logEntry := widget.NewMultiLineEntry()
-	logEntry.Wrapping = fyne.TextWrapOff
-	logScroll := container.NewScroll(logEntry)
-	logScroll.SetMinSize(fyne.NewSize(0, 150))
+	outputScroll.SetMinSize(fyne.NewSize(0, 200))
 
 	// 控件：模式、移位、暴力破解
 	shiftEntry := widget.NewEntry()
@@ -102,9 +97,7 @@ func main() {
 				}
 				res = caesar(inputEntry.Text, shiftVal, mode, false)
 			}
-			// 输出与记录日志
 			outputEntry.SetText(strings.Join(res, "\n"))
-			logEntry.SetText(strings.Join(res, "\n"))
 		}()
 	})
 
@@ -115,12 +108,11 @@ func main() {
 		bruteCheck, runBtn,
 	)
 
-	// 主界面：文本处理与日志
+	// 主界面：文本处理
 	content := container.NewVBox(
 		toolbar,
 		widget.NewLabel("输入文本："), inputScroll,
 		widget.NewLabel("输出结果："), outputScroll,
-		widget.NewLabel("处理日志："), logScroll,
 	)
 
 	win.SetContent(content)
